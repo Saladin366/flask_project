@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}{{ author.username }}{% endblock %}
+{% block content %}
+<h3 class="border-top text-center py-3">Записи пользователя {{ author.first_name }} {{ author.last_name }}</h3>
+  <hr>
+  {% include 'blog/includes/post_loop.html' %}
+{% endblock %} 

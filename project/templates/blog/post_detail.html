@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}{{ posts[0].text[:15] }}{% endblock %}
+{% block content %}
+<h3 class="border-top text-center py-3">Подробная информация</h3>
+  <hr>
+  {% include 'blog/includes/post_loop.html' %}
+{% endblock %} 

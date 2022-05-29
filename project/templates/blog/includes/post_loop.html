@@ -1,0 +1,40 @@
+{% for post in posts %}
+<div class="row">
+  <aside class="col-12 col-md-3">
+    <ul class="list-group list-group-flush">
+      {% if request.endpoint != 'blog.profile' %}
+        <li class="list-group-item">
+          Автор: <a href="{{ url_for('blog.profile', username = post.author.username) }}">
+          {{ post.author.first_name }} {{post.author.last_name}}</a>
+        </li>
+      {% endif %}
+        <li class="list-group-item">
+        Дата публикации: {{ post.created_on.strftime('%d %B %Y') }} 
+        </li>
+      {% if request.endpoint == 'blog.post_detail' %}
+        <li class="list-group-item">
+          Дата последнего изменения: {{ post.created_on.strftime('%d %B %Y') }} 
+        </li>
+        {% if current_user.is_authenticated %}
+          <li class="list-group-item">
+            <a class="btn btn-lg btn-primary" href="" role="button">
+              Нравится
+            </a>
+          </li>
+        {% endif %}
+      {% else %}
+        <li class="list-group-item">
+          <a href="{{ url_for('blog.post_detail', id = post.id) }}">
+            подробная информация
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </aside>
+  <article class="col-12 col-md-9">
+    <p>{{ post.text }}</p>
+  </article>  
+  {% if not loop.last %}<hr>{% endif %}
+  <br>
+</div>
+{% endfor %}
