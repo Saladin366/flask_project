@@ -13,7 +13,7 @@
         </li>
       {% if request.endpoint == 'blog.post_detail' %}
         <li class="list-group-item">
-          Дата последнего изменения: {{ post.created_on.strftime('%d %B %Y') }} 
+          Дата последнего изменения: {{ post.updated_on.strftime('%d %B %Y') }} 
         </li>
         {% if current_user.is_authenticated %}
           <li class="list-group-item">
@@ -24,7 +24,7 @@
         {% endif %}
       {% else %}
         <li class="list-group-item">
-          <a href="{{ url_for('blog.post_detail', id = post.id) }}">
+          <a href="{{ url_for('blog.post_detail', id=post.id) }}">
             подробная информация
           </a>
         </li>
@@ -33,6 +33,9 @@
   </aside>
   <article class="col-12 col-md-9">
     <p>{{ post.text }}</p>
+    {% if request.endpoint == 'blog.post_detail' and post.author == current_user %}  
+          <a class="btn btn-primary" href="{{ url_for('blog.update_post', id=post.id) }}">редактировать запись</a>
+    {% endif %}
   </article>  
   {% if not loop.last %}<hr>{% endif %}
   <br>

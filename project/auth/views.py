@@ -38,7 +38,8 @@ def login():
                 User.query.filter_by(username=data).first())
         if user and user.check_password(form.password.data):
             login_user(user)
-            return redirect(request.args.get('next', None) or url_for('blog.index'))
+            return redirect(
+                request.args.get('next', None) or url_for('blog.index'))
         flash(CHECK_EMAIL)
         return redirect(url_for('.login'))
     return render_template('auth/login.html', form=form)
@@ -49,4 +50,4 @@ def login():
 def logout():
     logout_user()
     flash(LOGOUT)
-    return redirect(url_for('.login'))
+    return redirect(request.args.get('next', None) or url_for('.login'))

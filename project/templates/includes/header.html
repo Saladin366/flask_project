@@ -12,14 +12,14 @@
             <a class="nav-link link-light" href="{{ url_for('blog.create_post') }}">Создать запись</a>
           </li>
           <li class="nav-item"> 
-            <a class="nav-link link-light" href="{{ url_for('auth.logout')}}">Выйти</a>
+            <a class="nav-link link-light" href="{{ url_for('auth.logout')}}?next={{ request.path }}">Выйти</a>
           </li>
           <li class="nav-link"> 
             {{current_user.username | capitalize}}
           </li>
         {% else %}
           <li class="nav-item"> 
-            <a class="nav-link link-light" href="{{ url_for('auth.login')}}">Войти</a>
+            <a class="nav-link link-light" href="{{ url_for('auth.login')}}?next={{ request.path }}">Войти</a>
           </li>
           <li class="nav-item"> 
             <a class="nav-link link-light" href="{{ url_for('auth.signup')}}">Регистрация</a>

@@ -13,6 +13,7 @@ migrate = Migrate()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.login_message = LOGIN
+locale.setlocale(locale.LC_ALL, 'ru-Ru')
 
 
 def create_app():
@@ -31,8 +32,6 @@ def create_app():
 
     from .blog.views import bp as blog_blueprint
     app.register_blueprint(blog_blueprint)
-
-    locale.setlocale(locale.LC_ALL, 'ru-Ru')
 
     @app.context_processor
     def year():

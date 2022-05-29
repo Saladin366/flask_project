@@ -1,20 +1,40 @@
 {% extends "base.html" %}
-{% block title %}Новая запись{% endblock %}
+{% block title %}
+  {% if request.endpoint == 'blog.create_post' %}
+    Новая запись
+  {% else %}
+    Редактировать запись
+  {% endif %}
+{% endblock %}
 {% block content %}
   <div class="row justify-content-center">
     <div class="col-md-5 p-3">
       <div class="card">
         <div class="card-header">
-          Новая запись
+          {% if request.endpoint == 'blog.create_post' %}
+            Новая запись
+          {% else %}
+            Редактировать запись
+          {% endif %}
         </div>
         <div class="card-body">
           <form action="" method="post">
-            {% include 'includes/form_errors.html' %}
+            {% include 'includes/errors.html' %}
             {{ form.csrf_token() }}
-            {% include 'includes/form_loop.html' %}
+            <div class="form-group my-3">
+              {{ form.text.label() }}
+              {{ form.text(class="form-control") }}
+              {% for error in form.text.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+              {% endfor %}
+            </div>
             <div class="col-md-6">
               <button type="submit" class="btn btn-primary">
-                Создать
+                {% if request.endpoint == 'blog.create_post' %}
+                  Создать
+                {% else %}
+                  Сохранить
+                {% endif %}
               </button>
             </div>
           </form>

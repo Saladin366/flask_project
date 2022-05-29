@@ -23,8 +23,24 @@ def create_post():
         post = Post(text=form.text.data, author=current_user)
         db.session.add(post)
         db.session.commit()
-        return redirect(url_for('.index'))
+        return redirect(url_for('.post_detail', id=post.id))
     return render_template('blog/create_post.html', form=form)
+
+
+@bp.route('/posts/<int:id>/edit', methods=('GET', 'POST'),
+          strict_slashes=False)
+@login_required
+def update_post(id):
+    post = Post.query.get(id)
+    if post.author != current_user:
+        return redirect(url_for('.post_detail', id=id))
+    form = PostForm(text=post.text)
+    if form.validate_on_submit():
+        post.text = form.text.data
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('.post_detail', id=id))
+    return render_template('blog/create_post.html', form=form, post=post)
 
 
 @bp.route('/posts/<int:id>', strict_slashes=False)

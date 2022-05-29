@@ -9,7 +9,7 @@
         </div>
         <div class="card-body">
           <form action="" method="post">
-            {% include 'includes/form_errors.html' %}
+            {% include 'includes/errors.html' %}
             {{ form.csrf_token() }}
             {% include 'includes/form_loop.html' %}
             <div class="col-md-6">
