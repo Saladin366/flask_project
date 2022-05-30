@@ -1,8 +1,46 @@
 {% extends 'base.html' %}
-{% block title %}{{ posts[0].text[:15] }}{% endblock %}
+{% block title %}{{ post.text[:15] }}{% endblock %}
 {% block content %}
 <h3 class="border-top text-center py-3">Подробная информация</h3>
   <hr>
   {% include 'includes/errors.html' %}
-  {% include 'blog/includes/post_loop.html' %}
+  <div class="row">
+    <aside class="col-12 col-md-3">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Автор: <a href="{{ url_for('blog.profile', username = post.author.username) }}">
+          {{ post.author.first_name }} {{post.author.last_name}}</a>
+        </li>
+        <li class="list-group-item">
+          Дата публикации: {{ post.created_on.strftime('%d %B %Y') }} 
+        </li>
+        <li class="list-group-item">
+          Дата последнего изменения: {{ post.updated_on.strftime('%d %B %Y') }} 
+        </li>
+        <li class="list-group-item">
+          Добавлений в избранное: {{ count }} 
+        </li>
+        {% if current_user.is_authenticated %}
+          <li class="list-group-item">
+            {% if not favorite %}
+              <a class="btn btn-lg btn-primary" href="{{ url_for('blog.add_favorite', id=post.id) }}" role="button">
+                В избранное
+              </a>
+            {% else %}
+              <a class="btn btn-lg btn-light" href="{{ url_for('blog.delete_favorite', id=post.id) }}" role="button">
+                Из избранного
+              </a>
+            {% endif %}
+          </li>
+        {% endif %}
+      </ul>
+    </aside>
+    <article class="col-12 col-md-9">
+      <p>{{ post.text }}</p>
+      {% if post.author == current_user %}  
+            <a class="btn btn-primary" href="{{ url_for('blog.update_post', id=post.id) }}">редактировать</a>
+            <a class="btn btn-primary" href="{{ url_for('blog.delete_post', id=post.id) }}" >удалить</a>
+      {% endif %}
+    </article>  
+  </div>
 {% endblock %} 

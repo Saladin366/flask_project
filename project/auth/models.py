@@ -19,6 +19,8 @@ class User(db.Model, UserMixin):
         db.DateTime(), default=datetime.utcnow,  onupdate=datetime.utcnow)
     posts = db.relationship(
         'Post', backref='author', cascade='all,delete-orphan')
+    favorites = db.relationship(
+        'Favorite', backref='user', cascade='all,delete-orphan')
 
     def __repr__(self):
         return "<User:{}>".format(self.username)

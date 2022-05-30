@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}Избранное{% endblock %}
+{% block content %}
+  <h3 class="border-top text-center py-3">Любимые записи</h3>
+  <hr>
+  {% include 'includes/errors.html' %}
+  {% include 'blog/includes/post_loop.html' %}
+{% endblock %} 

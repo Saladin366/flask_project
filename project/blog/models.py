@@ -12,6 +12,17 @@ class Post(db.Model):
         db.DateTime(), default=datetime.utcnow,  onupdate=datetime.utcnow)
     author_id = db.Column(
         db.Integer(), db.ForeignKey('users.id'), nullable=False)
+    favorites = db.relationship(
+        'Favorite', backref='post', cascade='all,delete-orphan')
 
     def __repr__(self):
         return "<Post:{}>".format(self.text[:10])
+
+
+class Favorite(db.Model):
+    __tablename__ = 'favorites'
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(
+        db.Integer(), db.ForeignKey('users.id'), nullable=False)
+    post_id = db.Column(
+        db.Integer(), db.ForeignKey('posts.id'), nullable=False)
