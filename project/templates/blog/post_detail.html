@@ -41,6 +41,7 @@
             <a class="btn btn-primary" href="{{ url_for('blog.update_post', id=post.id) }}">редактировать</a>
             <a class="btn btn-primary" href="{{ url_for('blog.delete_post', id=post.id) }}" >удалить</a>
       {% endif %}
+      {% include 'blog/includes/comments.html' %}
     </article>  
   </div>
 {% endblock %} 

@@ -4,8 +4,8 @@
     <ul class="list-group list-group-flush">
       {% if request.endpoint != 'blog.profile' %}
         <li class="list-group-item">
-          Автор: <a href="{{ url_for('blog.profile', username = post.author.username) }}">
-          {{ post.author.first_name }} {{post.author.last_name}}</a>
+          Автор: <a href="{{ url_for('blog.profile', username=post.author.username) }}">
+          {{ post.author.first_name | capitalize}} {{ post.author.last_name | capitalize }}</a>
         </li>
       {% endif %}
       <li class="list-group-item">

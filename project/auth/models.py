@@ -21,6 +21,8 @@ class User(db.Model, UserMixin):
         'Post', backref='author', cascade='all,delete-orphan')
     favorites = db.relationship(
         'Favorite', backref='user', cascade='all,delete-orphan')
+    comments = db.relationship(
+        'Comment', backref='author', cascade='all,delete-orphan')
 
     def __repr__(self):
         return "<User:{}>".format(self.username)

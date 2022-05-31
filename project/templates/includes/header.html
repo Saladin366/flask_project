@@ -15,7 +15,7 @@
             <a class="nav-link link-light" href="{{ url_for('auth.logout')}}?next={{ request.path }}">Выйти</a>
           </li>
           <li class="nav-link"> 
-            {{current_user.username | capitalize}}
+            {{ current_user.username | capitalize }}
           </li>
         {% else %}
           <li class="nav-item"> 

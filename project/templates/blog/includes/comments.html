@@ -1,0 +1,50 @@
+{% if current_user.is_authenticated %}
+  <div class="col-md-5 ">
+    <div class="card my-4">
+      <h5 class="card-header">
+        {% if not comment_id %}
+          Добавить комментарий:
+        {% else %}
+          Редактировать комментарий:
+        {% endif %}
+      </h5>
+      <div class="card-body">
+        <form method="post"
+          {% if not comment_id %}
+            action="{{ url_for('blog.add_comment', id=post.id) }}"
+          {% else %}
+            action="{{ url_for('blog.update_comment', id=post.id, comment_id=comment_id) }}"
+          {% endif %}
+        >
+          {{ form.csrf_token() }}      
+          <div class="form-group mb-2">
+            {{ form.text(class="form-control") }}
+          </div>
+          <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endif %}
+<h5 class="card-header">Комментарии:</h5>
+<div class="card-body">
+  {% for comment in comments %}
+    <div class="media mb-4">
+      <div class="media-body">
+        <h5 class="mt-0">
+          <a href="{{ url_for('blog.profile', username=comment.author.username) }}">
+            {{ comment.author.first_name | capitalize }}
+            {{ comment.author.last_name | capitalize }}
+          </a>
+        </h5>
+        <p>{{ comment.text }}</p>
+        {% if comment.author == current_user %}
+          <a href="{{ url_for('blog.update_comment', id=post.id, comment_id=comment.id)}}">редактировать</a>
+          или
+          <a href="{{ url_for('blog.delete_comment', id=post.id, comment_id=comment.id)}}">удалить</a>
+        {% endif %}
+      </div>
+    </div>
+    {% if not loop.last %}<hr>{% endif %}
+  {% endfor %}
+</div>
